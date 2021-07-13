@@ -227,16 +227,46 @@ void GameUpdate(ESContext *esContext, float deltaTime)
 					Rect* r1 = (Rect*)SceneManager::GetInstance()->objList.at(i);
 					Rect* r2 = (Rect*)SceneManager::GetInstance()->objList.at(j);
 					cout << r1->yPos << " " << r2->yPos << endl;
-					if (r1->yPos + r1->height >= r2->yPos)
+					if (r1->yPos >= r2->yPos)
 					{
 						SceneManager::GetInstance()->objList.at(i)->canMove = true;
 						SceneManager::GetInstance()->objList.at(j)->canMove = false;
 					}
-					else if(r2->yPos + r2->height >= r1->yPos) {
+					else if(r2->yPos >= r1->yPos) {
 						SceneManager::GetInstance()->objList.at(i)->canMove = false;
 						SceneManager::GetInstance()->objList.at(j)->canMove = true;
 					}
 				}
+
+				if (SceneManager::GetInstance()->objList.at(i)->getType() == 1 && SceneManager::GetInstance()->objList.at(j)->getType() == 2)
+				{
+					Rect* r = (Rect*)SceneManager::GetInstance()->objList.at(i);
+					if (SceneManager::GetInstance()->objList.at(j)->yPos >= r->yPos)
+					{
+						SceneManager::GetInstance()->objList.at(j)->canMove = true;
+						SceneManager::GetInstance()->objList.at(i)->canMove = false;
+					}
+					else {
+						SceneManager::GetInstance()->objList.at(j)->canMove = false;
+						SceneManager::GetInstance()->objList.at(i)->canMove = true;
+					}
+				}
+
+				if (SceneManager::GetInstance()->objList.at(i)->getType() == 2 && SceneManager::GetInstance()->objList.at(j)->getType() == 2)
+				{
+					
+					if (SceneManager::GetInstance()->objList.at(j)->yPos >= SceneManager::GetInstance()->objList.at(i)->yPos)
+					{
+						SceneManager::GetInstance()->objList.at(j)->canMove = true;
+						SceneManager::GetInstance()->objList.at(i)->canMove = false;
+					}
+					else {
+						SceneManager::GetInstance()->objList.at(j)->canMove = false;
+						SceneManager::GetInstance()->objList.at(i)->canMove = true;
+					}
+				}
+				/*SceneManager::GetInstance()->objList.at(i)->canMove = false;
+				SceneManager::GetInstance()->objList.at(j)->canMove = false;*/
 			}
 		}
 	}
